@@ -5,7 +5,8 @@ from . import views
 
 app_name = "gdrivecrud"
 urlpatterns = [
-    path("", views.list, name="index"),
+    path("", views.index, name="index"),
+    path("delete/", views.delete, name="delete"),
     # path(
     #     "list/",
     #     TemplateView.as_view(template_name="gdrivecrud/list.html"),

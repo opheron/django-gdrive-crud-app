@@ -47,20 +47,20 @@ def get_gdrive_root_folder_items(service) -> list | None:
         .list(
             # pageSize=200,
             fields="nextPageToken, files(id, name, modifiedTime, kind, mimeType, webContentLink, webViewLink, fileExtension, exportLinks)",
-            q="'root' in parents and mimeType != 'application/vnd.google-apps.folder'",
+            q="'root' in parents and mimeType != 'application/vnd.google-apps.folder' and trashed = false",
             orderBy="folder,name,modifiedTime desc",
         )
         .execute()
     )
-    # print(f"{results=}")
     items = results.get("files", [])
 
     if not items:
-        # print("No files found.")
         return None
 
-    # print("Files:")
-    # for item in items:
-    #     print(f"{item['name']} ({item['id']})")
-
     return results
+
+def delete_gdrive_file(service, file_id) -> bool:
+
+    body_value = {'trashed': True}
+    response = service.files().update(fileId=file_id, body=body_value).execute()
+    return response

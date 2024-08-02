@@ -7,4 +7,5 @@ app_name = "gdrivecrud"
 urlpatterns = [
     path("", views.index, name="index"),
     path("delete/", views.delete, name="delete"),
+    path("upload/", views.upload, name="upload"),
 ]

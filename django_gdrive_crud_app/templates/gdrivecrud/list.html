@@ -43,6 +43,7 @@
         <th scope="col">Last Modified</th>
         <th scope="col">mimeType</th>
         <th scope="col">Download Link</th>
+        <th scope="col">Upload File to Folder</th>
         <th scope="col">fileExtension</th>
         <th scope="col">Export Links</th>
         <th scope="col">Delete</th>
@@ -66,6 +67,17 @@
               <a href="{{ item.webContentLink }}">download</a>
               {% else %}
                 &nbsp
+              {% endif %}
+            </td>
+            <td>
+              {% if item.mimeType == "application/vnd.google-apps.folder" %}
+              <form action="upload/" enctype="multipart/form-data" method="post" id="uploadFormFileId{{ item.id }}">
+                {% csrf_token %}
+                <input type="hidden" id="fileId" name="fileId" value="{{ item.id }}">
+                <input type="file" id="newFile" name="newFile">
+                <input type="submit" name="submit" value="Submit upload" />
+              </form>
+        </form>
               {% endif %}
             </td>
             <td>{{ item.fileExtension }}</td>
@@ -108,7 +120,7 @@
     {% if previous_page_token %}
     <li class="page-item"><a class="page-link" href="">Previous</a></li>
     {% endif %}
-    
+
     <li class="page-item"><a class="page-link" href="?nextpagetoken={{ next_page_token }}">Next</a></li>
   </ul>
 </nav>

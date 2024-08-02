@@ -6,6 +6,7 @@ from django.contrib import messages
 from google.auth.exceptions import RefreshError
 from googleapiclient.errors import HttpError
 from .google_api import build_google_service, get_gdrive_root_folder_items, delete_gdrive_file
+from googleapiclient.http import MediaFileUpload
 import django.utils.dateparse as dateparse
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
@@ -21,12 +22,10 @@ def index(request):
     service = build_google_service(request)
 
     next_page_token_arg = request.GET.get('nextpagetoken')
-    # previous_page_token_arg = request.GET.get('previouspagetoken')
 
     safe_next_page_token = None
     if next_page_token_arg is not None and len(next_page_token_arg) > 0:
         safe_next_page_token = urllib.parse.quote_plus(next_page_token_arg)
-        print(f"{safe_next_page_token=}")
 
     safe_previous_page_token = None
     # if previous_page_token_arg is not None and len(previous_page_token_arg) > 0:
@@ -36,14 +35,10 @@ def index(request):
     try:
         # if safe_previous_page_token and safe_next_page_token:
         if safe_next_page_token:
-            print(f"Trying to get next page...")
             # results = get_gdrive_root_folder_items(service, safe_next_page_token)
             results = get_gdrive_root_folder_items(service, next_page_token_arg)
-            print(f"with next_page_token_arg: {results=}")
         else:
-            print("not passing next token!")
             results = get_gdrive_root_folder_items(service)
-            # print(f"{results=}")
     except RefreshError as err:
         logger.warning(f"Couldn't refresh Google auth: {err}")
         messages.error(
@@ -58,7 +53,6 @@ def index(request):
                 "Insufficient permissions for Google DriveAPI - please sign in through OAuth again and grant permission!")
             return HttpResponseRedirect('../')
 
-    # print(f"{results=}")
     folder_files = results.get('files', [])
     next_page_token = results.get('nextPageToken', None)
 
@@ -74,18 +68,8 @@ def index(request):
             'previous_page_token': safe_previous_page_token
         })
 
-
-def page(request, next_page_token=None):
-    if next_page_token is None:
-        messages.error(
-            request,
-            "Missing nextPageToken!")
-        return HttpResponseRedirect('../')
-
-
 def delete(request):
-    if request.method == 'POST':  # If method is POST,
-        print("worked")
+    if request.method == 'POST':
         form_data = request.POST.dict()
         file_id = form_data.get("fileId", None)
         if file_id is None:
@@ -95,3 +79,31 @@ def delete(request):
         response = delete_gdrive_file(service, file_id)
         messages.success(request, 'File deleted successfully!')
         return HttpResponseRedirect('../')
+
+def upload(request):
+    if request.method == 'POST':
+        import os
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
+        from django.conf import settings
+
+        uploaded_file = request.FILES['newFile']
+        path = default_storage.save(uploaded_file.name, ContentFile(uploaded_file.read()))
+        tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+
+        service = build_google_service(request)
+
+        file_metadata = {"name": uploaded_file.name}
+
+        media = MediaFileUpload(tmp_file, mimetype=uploaded_file.content_type)
+
+        drive_file = (
+            service.files()
+            .create(body=file_metadata, media_body=media, fields="id")
+            .execute()
+        )
+
+        messages.success(request, "File uploaded successfully!")
+        return HttpResponseRedirect('../')
+
+

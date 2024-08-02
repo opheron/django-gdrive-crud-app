@@ -1,0 +1,88 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <value>
+          <list size="74">
+            <item index="0" class="java.lang.String" itemvalue="bs4" />
+            <item index="1" class="java.lang.String" itemvalue="validate-email" />
+            <item index="2" class="java.lang.String" itemvalue="django-allauth-ui" />
+            <item index="3" class="java.lang.String" itemvalue="pytest-django" />
+            <item index="4" class="java.lang.String" itemvalue="python-dateutil" />
+            <item index="5" class="java.lang.String" itemvalue="psycopg2-binary" />
+            <item index="6" class="java.lang.String" itemvalue="python-dotenv" />
+            <item index="7" class="java.lang.String" itemvalue="pycparser" />
+            <item index="8" class="java.lang.String" itemvalue="markuppy" />
+            <item index="9" class="java.lang.String" itemvalue="spdx-tools" />
+            <item index="10" class="java.lang.String" itemvalue="appdirs" />
+            <item index="11" class="java.lang.String" itemvalue="django-sortedm2m" />
+            <item index="12" class="java.lang.String" itemvalue="djangorestframework-simplejwt" />
+            <item index="13" class="java.lang.String" itemvalue="django-braces" />
+            <item index="14" class="java.lang.String" itemvalue="defusedcsv" />
+            <item index="15" class="java.lang.String" itemvalue="fake-useragent" />
+            <item index="16" class="java.lang.String" itemvalue="commonmark" />
+            <item index="17" class="java.lang.String" itemvalue="xlrd" />
+            <item index="18" class="java.lang.String" itemvalue="iniconfig" />
+            <item index="19" class="java.lang.String" itemvalue="requests-xml" />
+            <item index="20" class="java.lang.String" itemvalue="tablib" />
+            <item index="21" class="java.lang.String" itemvalue="django-import-export" />
+            <item index="22" class="java.lang.String" itemvalue="cryptography" />
+            <item index="23" class="java.lang.String" itemvalue="gunicorn" />
+            <item index="24" class="java.lang.String" itemvalue="django-auditlog" />
+            <item index="25" class="java.lang.String" itemvalue="python3-openid" />
+            <item index="26" class="java.lang.String" itemvalue="psutil" />
+            <item index="27" class="java.lang.String" itemvalue="odfpy" />
+            <item index="28" class="java.lang.String" itemvalue="boto3" />
+            <item index="29" class="java.lang.String" itemvalue="django-filter" />
+            <item index="30" class="java.lang.String" itemvalue="django-allauth" />
+            <item index="31" class="java.lang.String" itemvalue="pprintpp" />
+            <item index="32" class="java.lang.String" itemvalue="requests-html" />
+            <item index="33" class="java.lang.String" itemvalue="isodate" />
+            <item index="34" class="java.lang.String" itemvalue="pytest-clarity" />
+            <item index="35" class="java.lang.String" itemvalue="cffi" />
+            <item index="36" class="java.lang.String" itemvalue="mypy-extensions" />
+            <item index="37" class="java.lang.String" itemvalue="django-storages" />
+            <item index="38" class="java.lang.String" itemvalue="requests" />
+            <item index="39" class="java.lang.String" itemvalue="django-tables2" />
+            <item index="40" class="java.lang.String" itemvalue="django-login-required-middleware" />
+            <item index="41" class="java.lang.String" itemvalue="pytest-cov" />
+            <item index="42" class="java.lang.String" itemvalue="tomli" />
+            <item index="43" class="java.lang.String" itemvalue="django-invitations" />
+            <item index="44" class="java.lang.String" itemvalue="djangorestframework" />
+            <item index="45" class="java.lang.String" itemvalue="pyee" />
+            <item index="46" class="java.lang.String" itemvalue="django-webpack-loader" />
+            <item index="47" class="java.lang.String" itemvalue="pytest-sugar" />
+            <item index="48" class="java.lang.String" itemvalue="xlwt" />
+            <item index="49" class="java.lang.String" itemvalue="parse" />
+            <item index="50" class="java.lang.String" itemvalue="django-debug-toolbar" />
+            <item index="51" class="java.lang.String" itemvalue="toml" />
+            <item index="52" class="java.lang.String" itemvalue="pandas" />
+            <item index="53" class="java.lang.String" itemvalue="pandera" />
+            <item index="54" class="java.lang.String" itemvalue="xmljson" />
+            <item index="55" class="java.lang.String" itemvalue="elastic-apm" />
+            <item index="56" class="java.lang.String" itemvalue="django" />
+            <item index="57" class="java.lang.String" itemvalue="types-cryptography" />
+            <item index="58" class="java.lang.String" itemvalue="typing-inspect" />
+            <item index="59" class="java.lang.String" itemvalue="pillow" />
+            <item index="60" class="java.lang.String" itemvalue="pytz" />
+            <item index="61" class="java.lang.String" itemvalue="ply" />
+            <item index="62" class="java.lang.String" itemvalue="pyquery" />
+            <item index="63" class="java.lang.String" itemvalue="openpyxl" />
+            <item index="64" class="java.lang.String" itemvalue="lockfile" />
+            <item index="65" class="java.lang.String" itemvalue="pylev" />
+            <item index="66" class="java.lang.String" itemvalue="distlib" />
+            <item index="67" class="java.lang.String" itemvalue="msgpack" />
+            <item index="68" class="java.lang.String" itemvalue="poetry" />
+            <item index="69" class="java.lang.String" itemvalue="requests-toolbelt" />
+            <item index="70" class="java.lang.String" itemvalue="ptyprocess" />
+            <item index="71" class="java.lang.String" itemvalue="django-hijack" />
+            <item index="72" class="java.lang.String" itemvalue="pexpect" />
+            <item index="73" class="java.lang.String" itemvalue="webencodings" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

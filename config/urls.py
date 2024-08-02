@@ -20,7 +20,10 @@ urlpatterns = [
     path("users/", include("django_gdrive_crud_app.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    # ...
+    path(
+        "gdrivecrud/",
+        include("django_gdrive_crud_app.gdrivecrud.urls", namespace="gdrivecrud"),
+    ),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

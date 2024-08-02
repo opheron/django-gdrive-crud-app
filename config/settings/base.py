@@ -83,6 +83,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "django_gdrive_crud_app.users",
     # Your stuff: custom apps go here
+    "allauth.socialaccount.providers.google",
+    "django_gdrive_crud_app.gdrivecrud.apps.GdrivecrudConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -232,7 +234,7 @@ ADMINS = [("""Andrew Chong""", "i@andrewhchong.com")]
 MANAGERS = ADMINS
 # https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
 # Force the `admin` sign in process to go through the `django-allauth` workflow
-DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=False)
+DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=True)
 
 # LOGGING
 # ------------------------------------------------------------------------------
@@ -264,9 +266,9 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 # https://docs.allauth.org/en/latest/account/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = False
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "none"
 # https://docs.allauth.org/en/latest/account/configuration.html
 ACCOUNT_ADAPTER = "django_gdrive_crud_app.users.adapters.AccountAdapter"
 # https://docs.allauth.org/en/latest/account/forms.html
@@ -274,7 +276,33 @@ ACCOUNT_FORMS = {"signup": "django_gdrive_crud_app.users.forms.UserSignupForm"}
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
 SOCIALACCOUNT_ADAPTER = "django_gdrive_crud_app.users.adapters.SocialAccountAdapter"
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
-SOCIALACCOUNT_FORMS = {"signup": "django_gdrive_crud_app.users.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {
+    "signup": "django_gdrive_crud_app.users.forms.UserSocialSignupForm"
+}
+SOCIALACCOUNT_STORE_TOKENS = True
+DJANGO_ACCOUNT_ALLOW_REGISTRATION = True
+# Google-specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    # For each OAuth based provider, either add a ``SocialApp``
+    # (``socialaccount`` app) containing the required client
+    # credentials, or list them here:
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+            "https://www.googleapis.com/auth/drive",  # need to provide full url since this isn't available by default
+        ],
+        # You must set AUTH_PARAMS['access_type'] to offline in order to receive a refresh token on first login and on reauthentication requests (which is needed to refresh authentication tokens in the background, without involving the user’s browser). When unspecified, Google defaults to online.
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "APP": {
+            "client_id": "246390019067-ajg5mstlre9r07h9b7e9kvnnm4pfm5li.apps.googleusercontent.com",
+            "secret": "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",
+            "key": "",
+        },
+    }
+}
 
 
 # django-webpack-loader

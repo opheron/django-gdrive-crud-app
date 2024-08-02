@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}GDriveCrud List{% endblock title %}
+
+
+{% block main %}
+{% block content %}
+  <h1>GDriveCrud - Error</h1>
+
+  {% if err.status_code == 403 %}
+  <h2>403 Error!</h2>
+  <p>You did not provide permissions to access your Google Drive.
+    Please sign out and back in, and make sure to check the box to permit access to your Google Drive!
+  </p>
+    <p>
+    The box will say: "Select what django-gdrive-crud-app can access". Click the checkbox for: "See, edit, create, and delete all of your Google Drive files."
+    </p>
+  {% else %}
+  You experienced an unknown error: {{ err }}
+  {% endif %}
+
+{% endblock content %}
+{% endblock main %}
+
+
+
+
+This is the GdriveCRUD drive file list page!

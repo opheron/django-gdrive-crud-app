@@ -1,16 +1,41 @@
 # Create your views here.
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views import defaults as default_views
+from google.auth.exceptions import RefreshError
+from googleapiclient.errors import HttpError
+from .google_api import build_google_service, get_gdrive_root_folder_items
 
+import logging
+logger = logging.getLogger("console")
 
 def index(request):
     return HttpResponse("Hello, world. You're at the gdrivecrud index.")
 
 def list(request):
-    from .google_api import build_google_service, get_gdrive_root_folder_items
-
+    logger.warning("Test debug")
     service = build_google_service()
-    results = get_gdrive_root_folder_items(service)
+
+    try:
+        results = get_gdrive_root_folder_items(service)
+    except RefreshError as err:
+        logger.warning(f"Couldn't refresh Google auth: {err}")
+        return redirect(default_views.server_error)
+    except HttpError as err:
+        if err.status_code == 403:
+            logger.info("Couldn't access Google API because user didn't provide sufficient permissions.")
+            return render(
+                request,
+                "gdrivecrud/errors.html",
+                {
+                    "err": err
+                }
+            )
+        return redirect(default_views.server_error)
+
+
+        # service = build_google_service()
+        # results = get_gdrive_root_folder_items(service)
 
     folder_files = results.get('files', [])
     print(f"{folder_files=}")

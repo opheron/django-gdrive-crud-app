@@ -3,7 +3,7 @@ from typing import Optional
 from allauth.socialaccount.models import SocialAccount, SocialApp, SocialToken
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build, Resource
-
+from google.auth.transport.requests import Request
 
 def build_google_service() -> Resource | None:
     """Use user info from allauth to build Google API service """
@@ -18,10 +18,10 @@ def build_google_service() -> Resource | None:
     scopes = [
         'profile',
         'email',
-        'https://www.googleapis.com/auth/drive'  # might actually be unnecessary since requested previously
+        'https://www.googleapis.com/auth/drive'  # include gdrive API scope to ensure permissions request
     ]
 
-    creds = Credentials(
+    credentials = Credentials(
         token=token.token,
         refresh_token=token,
         scopes=scopes,
@@ -29,7 +29,15 @@ def build_google_service() -> Resource | None:
         client_id=client.client_id,
         client_secret=client.secret)
 
-    service = build('drive', 'v3', credentials=creds)
+    # refresh credentials if invalid or expired
+    if not credentials.valid or credentials.expired:
+        if credentials.refresh_token:
+            token.token_secret = credentials.refresh_token
+
+    token.token = credentials.token
+    token.save()
+
+    service = build('drive', 'v3', credentials=credentials)
     return service
 
 

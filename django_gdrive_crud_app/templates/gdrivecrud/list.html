@@ -31,17 +31,9 @@
 
   {% endfor %}
 
-
-
   <div class="container">
   <h1>GDriveCrud - File List</h1>
   </div>
-
-
-
-
-{#  TODO:  Display file names, types, and last modified dates. #}
-  <p>Next Page Token: {{ next_page_token }}</p>
 
   <div class="container-fluid">
     <table class="table table-hover">
@@ -107,37 +99,25 @@
         {% empty %}
             <p>Sorry, no files were found.</p>
         {% endfor %}
-
-
-
-
-{#      <tr>#}
-{#        <th scope="row">2</th>#}
-{#        <td>Jacob</td>#}
-{#        <td>Thornton</td>#}
-{#        <td>@fat</td>#}
-{#      </tr>#}
-{#      <tr>#}
-{#        <th scope="row">3</th>#}
-{#        <td colspan="2">Larry the Bird</td>#}
-{#        <td>@twitter</td>#}
-{#      </tr>#}
       </tbody>
     </table>
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if previous_page_token %}
+    <li class="page-item"><a class="page-link" href="">Previous</a></li>
+    {% endif %}
+    
+    <li class="page-item"><a class="page-link" href="?nextpagetoken={{ next_page_token }}">Next</a></li>
+  </ul>
+</nav>
+
+  <p>Next Page Token: {{ next_page_token }}</p>
+
+
   </div>
-
-
-
-
-
-
-{#    {{ items }}#}
 
 {% endblock content %}
 
 {% endblock main %}
-
-
-
-
-This is the GdriveCRUD drive file list page!

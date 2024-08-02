@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}GDriveCrud List{% endblock title %}
+
+
+{% block main %}
+  <div class="card">
+    <div class="card-body">
+{% block content %}
+  <h1>GDriveCrud List</h1>
+  <h2>
+    Here's where the file list goes!
+  </h2>
+
+
+
+
+{#  TODO:  Display file names, types, and last modified dates. #}
+  <p>Next Page Token: {{ next_page_token }}</p>
+
+  <div class="container-fluid">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Kind</th>
+        <th scope="col">Last Modified</th>
+        <th scope="col">mimeType</th>
+        <th scope="col">Download Link</th>
+        <th scope="col">fileExtension</th>
+        <th scope="cole">Export Links</th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for item in folder_files %}
+          <tr>
+          {#        <th scope="row">1</th>#}
+            <td>
+              {% if item.webViewLink %}
+                <a href="{{ item.webViewLink }}">{{ item.name }}</a>
+              {% else %}
+                {{ item.name }}
+              {% endif %}
+            </td>
+            <td>{{ item.kind }}</td>
+            <td>{{ item.modifiedTime }}</td>
+            <td>{{ item.mimeType }}</td>
+            <td>
+              {% if item.webContentLink %}
+              <a href="{{ item.webContentLink }}">download</a>
+              {% else %}
+                n/a
+              {% endif %}
+            </td>
+            <td>{{ item.fileExtension }}</td>
+            <td>
+              <ul>
+              {% for export_type, export_link in item.exportLinks.items %}
+                <li>
+                  <a href="{{ export_link }}">{{ export_type }}</a>
+                </li>
+              {% endfor %}
+              </ul>
+            </td>
+          </tr>
+        {% empty %}
+            <li>Sorry, no files were found.</li>
+        {% endfor %}
+
+
+
+{#      <tr>#}
+{#        <th scope="row">2</th>#}
+{#        <td>Jacob</td>#}
+{#        <td>Thornton</td>#}
+{#        <td>@fat</td>#}
+{#      </tr>#}
+{#      <tr>#}
+{#        <th scope="row">3</th>#}
+{#        <td colspan="2">Larry the Bird</td>#}
+{#        <td>@twitter</td>#}
+{#      </tr>#}
+      </tbody>
+    </table>
+  </div>
+
+{#    {{ items }}#}
+
+{% endblock content %}
+
+    </div>
+  </div>
+{% endblock main %}
+
+
+
+
+This is the GdriveCRUD drive file list page!

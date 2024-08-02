@@ -1,9 +1,28 @@
 # Create your views here.
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
     return HttpResponse("Hello, world. You're at the gdrivecrud index.")
+
+def list(request):
+    from .google_api import build_google_service, get_gdrive_root_folder_items
+
+    service = build_google_service()
+    results = get_gdrive_root_folder_items(service)
+
+    folder_files = results.get('files', [])
+    print(f"{folder_files=}")
+    next_page_token = results.get('nextPageToken', None)
+
+    return render(
+        request,
+        "gdrivecrud/list.html",
+        {
+            'folder_files': folder_files,
+            'next_page_token': next_page_token
+        })
 
 
 # def read(request):
